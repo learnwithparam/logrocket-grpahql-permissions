@@ -1,0 +1,20 @@
+{
+  "name": "logrocket-graphql-permissions",
+  "version": "1.0.0",
+  "description": "An example project to show the permissions in graphql app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Param-Harrison",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server-express": "^2.17.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
