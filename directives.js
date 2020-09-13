@@ -5,19 +5,24 @@ const {
 const { defaultFieldResolver } = require("graphql");
 
 class isLoggedinDirective extends SchemaDirectiveVisitor {
-  visitFieldDefinition(field) {
-    const originalResolve = field.resolve || defaultFieldResolver;
+  visitObject(obj) {
+    const fields = obj.getFields();
 
-    field.resolve = async function (...args) {
-      const context = args[2];
-      const user = context.user || "";
-      if (!user) {
-        throw new ForbiddenError("Not Authorized");
-      }
+    Object.keys(fields).forEach((fieldName) => {
+      const field = fields[fieldName];
+      const originalResolve = field.resolve || defaultFieldResolver;
 
-      const data = await originalResolve.apply(this, args);
-      return data;
-    };
+      field.resolve = async function (...args) {
+        const context = args[2];
+        const user = context.user || "";
+        if (!user) {
+          throw new ForbiddenError("Not Authorized");
+        }
+
+        const data = await originalResolve.apply(this, args);
+        return data;
+      };
+    });
   }
 }
 
