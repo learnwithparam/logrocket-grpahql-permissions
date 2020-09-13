@@ -3,8 +3,20 @@ const { ApolloServer } = require("apollo-server-express");
 
 const typeDefs = require("./schema");
 const resolvers = require("./resolvers");
+const { isLoggedinDirective } = require("./directives");
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  schemaDirectives: {
+    isLoggedin: isLoggedinDirective,
+  },
+  context: ({ req }) => {
+    return {
+      user: req.headers.user || "",
+    };
+  },
+});
 const app = express();
 server.applyMiddleware({ app });
 

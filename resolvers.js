@@ -1,4 +1,4 @@
-const { ApolloError } = require("apollo-server-express");
+const { ApolloError, ForbiddenError } = require("apollo-server-express");
 const tweets = require("./data");
 
 // Provide resolver functions for your schema fields
