@@ -4,7 +4,15 @@ const { ApolloServer } = require("apollo-server-express");
 const typeDefs = require("./schema");
 const resolvers = require("./resolvers");
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req }) => {
+    return {
+      user: req.headers.user || "",
+    };
+  },
+});
 const app = express();
 server.applyMiddleware({ app });
 
